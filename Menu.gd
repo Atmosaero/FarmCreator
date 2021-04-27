@@ -1,29 +1,18 @@
 extends Panel
 
-#Buttons
-var A
-var B
-var C
-var D
+var MaterialSelect 
 
-var MaterialSelect
+func _on_A_pressed():
+	MaterialSelect == 1
+	print(MaterialSelect)
 
+func _on_B_pressed():
+	MaterialSelect == 2
+	print(MaterialSelect)
+func _on_D_pressed():
+	MaterialSelect == "Potato"
+	print(MaterialSelect)
 
-func _ready():
-	A = get_node("A")
-	B = get_node("B")
-	C = get_node("C")
-	D = get_node("D")
-
-func _process(delta):
-	if A.pressed:
-		MaterialSelect == "Strawberry"
-	if B.pressed:
-		MaterialSelect == "Water"
-	if C.pressed:
-		MaterialSelect == "Cabbage"
-	if D.pressed:
-		MaterialSelect == "Potato"
-		
-	
-
+func _on_C_pressed():
+	MaterialSelect == "Water"
+	print(MaterialSelect)

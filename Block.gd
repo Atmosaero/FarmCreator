@@ -1,22 +1,23 @@
 extends MeshInstance
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var material
+onready var GlobalSrc = get_node("/root/Menu")
 
-# Called when the node enters the scene tree for the first time.
+var materialStatus = GlobalSrc.MaterialSelect
+
+var material = SpatialMaterial.new()
+
 func _ready():
-	var material = self.get_node(".").get_surface_material(0)
-	material.albedo_color = Color(1, 0, 0)
+	pass
+	
 
 func _on_Area_input_event(camera, event, click_position, click_normal, shape_idx):
-	print("cool!")
 	build()
-		
+	print(materialStatus)
 func build():
-	set_surface_material(0, material)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	if materialStatus == "Strawberry":
+		material.albedo_color = Color(1, 0, 0)
+		set_surface_material(0, material)
+	if materialStatus == "Water":
+		material.albedo_color = Color(0, 0, 1, 1)
+		set_surface_material(0, material)	
