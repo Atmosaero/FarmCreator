@@ -1,18 +1,22 @@
 extends Panel
 
-var MaterialSelect 
+export (int) var MaterialBrush
+
+
+
 
 func _on_A_pressed():
-	MaterialSelect == 1
-	print(MaterialSelect)
+	MaterialBrush = 1
+	print(MaterialBrush)
 
 func _on_B_pressed():
-	MaterialSelect == 2
-	print(MaterialSelect)
-func _on_D_pressed():
-	MaterialSelect == "Potato"
-	print(MaterialSelect)
+	MaterialBrush = 2
+	print(MaterialBrush)
 
 func _on_C_pressed():
-	MaterialSelect == "Water"
-	print(MaterialSelect)
+	MaterialBrush = 3
+	print(MaterialBrush)
+
+func _on_D_pressed():
+	MaterialBrush = 4
+	print(MaterialBrush)
