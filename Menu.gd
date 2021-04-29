@@ -1,13 +1,16 @@
 extends Panel
 
-export (int) var MaterialBrush
+var MaterialBrush
 
+var x = 6
 
-
-
+func _ready():
+	x = 10
+	MaterialBrush = 0
 func _on_A_pressed():
+	x = 5
 	MaterialBrush = 1
-	print(MaterialBrush)
+	print(x)
 
 func _on_B_pressed():
 	MaterialBrush = 2

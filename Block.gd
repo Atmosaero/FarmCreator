@@ -1,9 +1,13 @@
 extends MeshInstance
 
 var material = SpatialMaterial.new()
-var MaterialBrush = get_node("/root/Menu")
+var MaterialBrush 
 
+func _process(delta):
+	MaterialBrush = Menu.MaterialBrush
+	print(Menu.x)
 func _on_Area_input_event(camera, event, click_position, click_normal, shape_idx):
+	print(Menu.x)
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed == true:
 			print(Menu.MaterialBrush)
@@ -24,3 +28,5 @@ func _on_Area_input_event(camera, event, click_position, click_normal, shape_idx
 				set_surface_material(0, material)	
 				print(Menu.MaterialBrush)
 	
+func _ready():
+	print(Menu.x)

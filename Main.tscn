@@ -52,6 +52,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CameraHigh" type="Camera" parent="Terrain/CameraRotate"]
+transform = Transform( 0.0416667, 0, 0, 0, -4.37114e-08, 1, 0, -0.0401284, -1.75407e-09, 0, 42, 0 )
+
 [node name="Control" type="Control" parent="."]
 margin_left = 495.0
 margin_top = 197.0
@@ -70,7 +73,6 @@ script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-MaterialBrush = 2
 
 [node name="A" type="Button" parent="Control/Menu"]
 margin_left = 9.0
@@ -133,7 +135,6 @@ transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 0.0
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 script = ExtResource( 8 )
-MaterialBrush = null
 
 [node name="Area" type="Area" parent="Control/Menu/Slots/Block" groups=[
 "Blocks",
@@ -143,12 +144,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="Control/Menu/Slots/Block/Area"]
 shape = SubResource( 6 )
 
-[connection signal="pressed" from="Control/Menu/A" to="Control/Menu/Slots/Block" method="_on_A_pressed"]
 [connection signal="pressed" from="Control/Menu/A" to="Control/Menu" method="_on_A_pressed"]
-[connection signal="pressed" from="Control/Menu/B" to="Control/Menu/Slots/Block" method="_on_B_pressed"]
+[connection signal="pressed" from="Control/Menu/A" to="Control/Menu/Slots/Block" method="_on_A_pressed"]
 [connection signal="pressed" from="Control/Menu/B" to="Control/Menu" method="_on_B_pressed"]
-[connection signal="pressed" from="Control/Menu/C" to="Control/Menu/Slots/Block" method="_on_C_pressed"]
+[connection signal="pressed" from="Control/Menu/B" to="Control/Menu/Slots/Block" method="_on_B_pressed"]
 [connection signal="pressed" from="Control/Menu/C" to="Control/Menu" method="_on_C_pressed"]
-[connection signal="pressed" from="Control/Menu/D" to="Control/Menu/Slots/Block" method="_on_D_pressed"]
+[connection signal="pressed" from="Control/Menu/C" to="Control/Menu/Slots/Block" method="_on_C_pressed"]
 [connection signal="pressed" from="Control/Menu/D" to="Control/Menu" method="_on_D_pressed"]
+[connection signal="pressed" from="Control/Menu/D" to="Control/Menu/Slots/Block" method="_on_D_pressed"]
 [connection signal="input_event" from="Control/Menu/Slots/Block/Area" to="Control/Menu/Slots/Block" method="_on_Area_input_event"]
