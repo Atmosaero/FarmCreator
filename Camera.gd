@@ -1,6 +1,7 @@
 extends MeshInstance
 
-
+var ButtonLight
+var ButtonCam
 
 const Speed = 0.01
 var LightStatus = true
@@ -13,17 +14,21 @@ var CameraStatus = false
 func _ready():
 	Camera1 = get_node("Camera")
 	Camera2 = get_node("CameraHigh")
+	
+	ButtonLight = get_node("ButtonLight")
+	ButtonCam = get_node("ButtonCamera")
+	
 	LightObject = get_node("Camera/DirectionalLight")
 func _process(delta):
 	Camera2.current = CameraStatus
 	#Move
-	if Input.is_action_pressed("right"):
+	if Input.is_action_pressed("right") && CameraStatus == false:
 		rotate_y(-Speed)
-	if Input.is_action_pressed("left"):
+	if Input.is_action_pressed("left") && CameraStatus == false:
 		rotate_y(Speed)
 	#Light
-	if Input.is_action_just_pressed("Light"):
+	if Input.is_action_just_pressed("Light") || ButtonLight.pressed:
 		LightStatus = !LightStatus
 		LightObject.visible = LightStatus
-	if Input.is_action_just_pressed("CameraTranslate"):
+	if Input.is_action_just_pressed("CameraTranslate") || ButtonCam.pressed:
 		CameraStatus = !CameraStatus

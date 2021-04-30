@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Menu="*res://Menu.gd"
+Block="*res://Block.gd"
 
 [display]
 
