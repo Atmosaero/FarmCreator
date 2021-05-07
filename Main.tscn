@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://CameraMove.gd" type="Script" id=2]
@@ -8,21 +8,34 @@
 [ext_resource path="res://Materials/Potato.png" type="Texture" id=6]
 [ext_resource path="res://Menu.gd" type="Script" id=7]
 [ext_resource path="res://Block.gd" type="Script" id=8]
+[ext_resource path="res://BaseDate.gd" type="Script" id=9]
+[ext_resource path="res://Materials/Grass.tres" type="Material" id=10]
+[ext_resource path="res://Materials/Water.tres" type="Material" id=11]
+[ext_resource path="res://Materials/Dirt.tres" type="Material" id=12]
 
 [sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.188235, 0.72549, 0.309804, 1 )
 
-[sub_resource type="Skin" id=3]
+[sub_resource type="Environment" id=3]
+background_mode = 1
+background_energy = 0.0
+ambient_light_energy = 0.0
+ss_reflections_enabled = true
+ssao_enabled = true
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="CanvasItemMaterial" id=4]
+blend_mode = 3
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="Skin" id=5]
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="CubeMesh" id=6]
+
+[sub_resource type="BoxShape" id=7]
 
 [node name="Main" type="Spatial"]
+script = ExtResource( 9 )
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 24, 0, 0, 0, 1, 0, 0, 0, 24.92, 1, -2.21253, -9.35198 )
@@ -42,7 +55,8 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="Terrain/CameraRotate"]
-transform = Transform( 0.0416667, 0, 0, 0, 0.90584, 0.42362, 0, -0.0163433, 0.0349475, 0, 25.2125, 2.14642 )
+transform = Transform( 0.0416667, 0, 0, 0, 0.912054, 0.410069, 0, -0.0164554, 0.0365993, 0, 24.2125, 2.14642 )
+environment = SubResource( 3 )
 far = 250.0
 script = ExtResource( 2 )
 
@@ -61,9 +75,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CameraHigh" type="Camera" parent="Terrain/CameraRotate"]
-transform = Transform( 0.0416667, 0, 0, 0, -4.37114e-08, 1, 0, -0.0401284, -1.75407e-09, 0, 42, 0 )
-
 [node name="ButtonCamera" type="Button" parent="Terrain/CameraRotate"]
 margin_left = 711.222
 margin_top = 571.0
@@ -73,26 +84,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="."]
-margin_left = 495.0
-margin_top = 197.0
-margin_right = 535.0
-margin_bottom = 237.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="CameraHigh" type="Camera" parent="Terrain"]
+transform = Transform( 0.0416667, 0, 0, 0, -4.37114e-08, 1, 0, -0.0401284, -1.75407e-09, 0, 42, 0 )
+current = true
 
-[node name="Menu" type="Panel" parent="Control"]
-margin_left = -472.0
-margin_top = -174.0
-margin_right = -254.0
-margin_bottom = 373.0
+[node name="Menu" type="Panel" parent="."]
+material = SubResource( 4 )
+margin_left = 779.76
+margin_top = 17.8809
+margin_right = 997.76
+margin_bottom = 564.881
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="A" type="Button" parent="Control/Menu"]
+[node name="Button1" type="Button" parent="Menu"]
 margin_left = 9.0
 margin_top = 10.0
 margin_right = 96.0
@@ -105,7 +112,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="B" type="Button" parent="Control/Menu"]
+[node name="Button2" type="Button" parent="Menu"]
 margin_left = 9.0
 margin_top = 142.002
 margin_right = 96.0
@@ -118,7 +125,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="C" type="Button" parent="Control/Menu"]
+[node name="Button3" type="Button" parent="Menu"]
 margin_left = 117.888
 margin_top = 10.0
 margin_right = 204.888
@@ -130,7 +137,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="D" type="Button" parent="Control/Menu"]
+[node name="Button4" type="Button" parent="Menu"]
 margin_left = 117.888
 margin_top = 142.002
 margin_right = 204.888
@@ -142,32 +149,4507 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slots" type="MeshInstance" parent="Control/Menu"]
+[node name="Slots" type="MeshInstance" parent="Menu"]
 transform = Transform( 24, 0, 0, 0, 1, 0, 0, 0, 24, 0, 0.787466, -10.352 )
-skin = SubResource( 3 )
+skin = SubResource( 5 )
 
-[node name="Block" type="MeshInstance" parent="Control/Menu/Slots" groups=[
+[node name="Block" type="MeshInstance" parent="Menu/Slots" groups=[
 "Blocks",
 ]]
 transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 0.0416667 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
 script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
 
-[node name="Area" type="Area" parent="Control/Menu/Slots/Block" groups=[
+[node name="Area" type="Area" parent="Menu/Slots/Block" groups=[
 "Blocks",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Control/Menu/Slots/Block/Area"]
-shape = SubResource( 6 )
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block/Area"]
+shape = SubResource( 7 )
 
-[connection signal="pressed" from="Control/Menu/A" to="Control/Menu/Slots/Block" method="_on_A_pressed"]
-[connection signal="pressed" from="Control/Menu/A" to="Control/Menu" method="_on_A_pressed"]
-[connection signal="pressed" from="Control/Menu/B" to="Control/Menu/Slots/Block" method="_on_B_pressed"]
-[connection signal="pressed" from="Control/Menu/B" to="Control/Menu" method="_on_B_pressed"]
-[connection signal="pressed" from="Control/Menu/C" to="Control/Menu/Slots/Block" method="_on_C_pressed"]
-[connection signal="pressed" from="Control/Menu/C" to="Control/Menu" method="_on_C_pressed"]
-[connection signal="pressed" from="Control/Menu/D" to="Control/Menu/Slots/Block" method="_on_D_pressed"]
-[connection signal="pressed" from="Control/Menu/D" to="Control/Menu" method="_on_D_pressed"]
-[connection signal="input_event" from="Control/Menu/Slots/Block/Area" to="Control/Menu/Slots/Block" method="_on_Area_input_event"]
+[node name="Block4" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block4" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block4/Area"]
+shape = SubResource( 7 )
+
+[node name="Block5" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block5" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block5/Area"]
+shape = SubResource( 7 )
+
+[node name="Block2" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block2" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block2/Area"]
+shape = SubResource( 7 )
+
+[node name="Block3" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block3" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block3/Area"]
+shape = SubResource( 7 )
+
+[node name="Block6" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block6" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block6/Area"]
+shape = SubResource( 7 )
+
+[node name="Block7" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block7" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block7/Area"]
+shape = SubResource( 7 )
+
+[node name="Block8" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block8" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block8/Area"]
+shape = SubResource( 7 )
+
+[node name="Block9" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block9" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block9/Area"]
+shape = SubResource( 7 )
+
+[node name="Block10" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block10" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block10/Area"]
+shape = SubResource( 7 )
+
+[node name="Block11" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block11" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block11/Area"]
+shape = SubResource( 7 )
+
+[node name="Block12" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block12" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block12/Area"]
+shape = SubResource( 7 )
+
+[node name="Block13" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block13" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block13/Area"]
+shape = SubResource( 7 )
+
+[node name="Block14" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block14" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block14/Area"]
+shape = SubResource( 7 )
+
+[node name="Block15" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block15" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block15/Area"]
+shape = SubResource( 7 )
+
+[node name="Block16" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block16" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block16/Area"]
+shape = SubResource( 7 )
+
+[node name="Block17" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block17" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block17/Area"]
+shape = SubResource( 7 )
+
+[node name="Block18" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block18" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block18/Area"]
+shape = SubResource( 7 )
+
+[node name="Block19" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block19" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block19/Area"]
+shape = SubResource( 7 )
+
+[node name="Block20" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block20" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block20/Area"]
+shape = SubResource( 7 )
+
+[node name="Block21" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block21" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block21/Area"]
+shape = SubResource( 7 )
+
+[node name="Block22" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block22" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block22/Area"]
+shape = SubResource( 7 )
+
+[node name="Block23" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block23" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block23/Area"]
+shape = SubResource( 7 )
+
+[node name="Block24" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block24" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block24/Area"]
+shape = SubResource( 7 )
+
+[node name="Block25" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block25" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block25/Area"]
+shape = SubResource( 7 )
+
+[node name="Block26" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block26" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block26/Area"]
+shape = SubResource( 7 )
+
+[node name="Block27" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block27" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block27/Area"]
+shape = SubResource( 7 )
+
+[node name="Block28" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block28" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block28/Area"]
+shape = SubResource( 7 )
+
+[node name="Block29" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block29" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block29/Area"]
+shape = SubResource( 7 )
+
+[node name="Block30" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block30" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block30/Area"]
+shape = SubResource( 7 )
+
+[node name="Block31" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block31" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block31/Area"]
+shape = SubResource( 7 )
+
+[node name="Block32" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block32" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block32/Area"]
+shape = SubResource( 7 )
+
+[node name="Block33" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block33" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block33/Area"]
+shape = SubResource( 7 )
+
+[node name="Block34" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block34" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block34/Area"]
+shape = SubResource( 7 )
+
+[node name="Block35" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block35" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block35/Area"]
+shape = SubResource( 7 )
+
+[node name="Block36" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block36" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block36/Area"]
+shape = SubResource( 7 )
+
+[node name="Block37" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block37" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block37/Area"]
+shape = SubResource( 7 )
+
+[node name="Block38" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block38" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block38/Area"]
+shape = SubResource( 7 )
+
+[node name="Block39" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block39" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block39/Area"]
+shape = SubResource( 7 )
+
+[node name="Block40" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block40" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block40/Area"]
+shape = SubResource( 7 )
+
+[node name="Block41" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block41" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block41/Area"]
+shape = SubResource( 7 )
+
+[node name="Block42" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block42" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block42/Area"]
+shape = SubResource( 7 )
+
+[node name="Block43" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block43" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block43/Area"]
+shape = SubResource( 7 )
+
+[node name="Block44" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block44" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block44/Area"]
+shape = SubResource( 7 )
+
+[node name="Block45" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block45" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block45/Area"]
+shape = SubResource( 7 )
+
+[node name="Block46" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block46" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block46/Area"]
+shape = SubResource( 7 )
+
+[node name="Block47" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block47" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block47/Area"]
+shape = SubResource( 7 )
+
+[node name="Block48" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block48" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block48/Area"]
+shape = SubResource( 7 )
+
+[node name="Block49" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block49" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block49/Area"]
+shape = SubResource( 7 )
+
+[node name="Block50" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block50" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block50/Area"]
+shape = SubResource( 7 )
+
+[node name="Block51" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block51" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block51/Area"]
+shape = SubResource( 7 )
+
+[node name="Block52" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block52" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block52/Area"]
+shape = SubResource( 7 )
+
+[node name="Block53" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block53" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block53/Area"]
+shape = SubResource( 7 )
+
+[node name="Block54" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block54" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block54/Area"]
+shape = SubResource( 7 )
+
+[node name="Block55" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block55" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block55/Area"]
+shape = SubResource( 7 )
+
+[node name="Block56" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block56" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block56/Area"]
+shape = SubResource( 7 )
+
+[node name="Block57" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block57" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block57/Area"]
+shape = SubResource( 7 )
+
+[node name="Block58" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block58" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block58/Area"]
+shape = SubResource( 7 )
+
+[node name="Block59" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block59" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block59/Area"]
+shape = SubResource( 7 )
+
+[node name="Block60" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block60" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block60/Area"]
+shape = SubResource( 7 )
+
+[node name="Block61" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block61" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block61/Area"]
+shape = SubResource( 7 )
+
+[node name="Block62" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block62" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block62/Area"]
+shape = SubResource( 7 )
+
+[node name="Block63" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block63" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block63/Area"]
+shape = SubResource( 7 )
+
+[node name="Block64" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block64" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block64/Area"]
+shape = SubResource( 7 )
+
+[node name="Block65" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block65" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block65/Area"]
+shape = SubResource( 7 )
+
+[node name="Block66" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block66" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block66/Area"]
+shape = SubResource( 7 )
+
+[node name="Block67" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block67" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block67/Area"]
+shape = SubResource( 7 )
+
+[node name="Block68" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block68" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block68/Area"]
+shape = SubResource( 7 )
+
+[node name="Block69" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block69" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block69/Area"]
+shape = SubResource( 7 )
+
+[node name="Block70" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block70" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block70/Area"]
+shape = SubResource( 7 )
+
+[node name="Block71" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.0416667, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block71" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block71/Area"]
+shape = SubResource( 7 )
+
+[node name="Block72" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.291667, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block72" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block72/Area"]
+shape = SubResource( 7 )
+
+[node name="Block73" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.625, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block73" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block73/Area"]
+shape = SubResource( 7 )
+
+[node name="Block74" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.375, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block74" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block74/Area"]
+shape = SubResource( 7 )
+
+[node name="Block75" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 0.708333, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block75" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block75/Area"]
+shape = SubResource( 7 )
+
+[node name="Block76" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block76" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block76/Area"]
+shape = SubResource( 7 )
+
+[node name="Block77" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block77" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block77/Area"]
+shape = SubResource( 7 )
+
+[node name="Block78" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block78" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block78/Area"]
+shape = SubResource( 7 )
+
+[node name="Block79" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block79" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block79/Area"]
+shape = SubResource( 7 )
+
+[node name="Block80" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block80" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block80/Area"]
+shape = SubResource( 7 )
+
+[node name="Block81" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block81" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block81/Area"]
+shape = SubResource( 7 )
+
+[node name="Block82" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block82" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block82/Area"]
+shape = SubResource( 7 )
+
+[node name="Block83" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block83" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block83/Area"]
+shape = SubResource( 7 )
+
+[node name="Block84" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block84" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block84/Area"]
+shape = SubResource( 7 )
+
+[node name="Block85" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block85" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block85/Area"]
+shape = SubResource( 7 )
+
+[node name="Block86" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block86" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block86/Area"]
+shape = SubResource( 7 )
+
+[node name="Block87" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block87" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block87/Area"]
+shape = SubResource( 7 )
+
+[node name="Block88" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block88" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block88/Area"]
+shape = SubResource( 7 )
+
+[node name="Block89" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block89" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block89/Area"]
+shape = SubResource( 7 )
+
+[node name="Block90" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block90" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block90/Area"]
+shape = SubResource( 7 )
+
+[node name="Block91" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block91" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block91/Area"]
+shape = SubResource( 7 )
+
+[node name="Block92" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block92" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block92/Area"]
+shape = SubResource( 7 )
+
+[node name="Block93" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block93" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block93/Area"]
+shape = SubResource( 7 )
+
+[node name="Block94" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block94" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block94/Area"]
+shape = SubResource( 7 )
+
+[node name="Block95" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block95" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block95/Area"]
+shape = SubResource( 7 )
+
+[node name="Block96" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block96" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block96/Area"]
+shape = SubResource( 7 )
+
+[node name="Block97" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block97" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block97/Area"]
+shape = SubResource( 7 )
+
+[node name="Block98" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block98" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block98/Area"]
+shape = SubResource( 7 )
+
+[node name="Block99" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block99" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block99/Area"]
+shape = SubResource( 7 )
+
+[node name="Block100" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block100" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block100/Area"]
+shape = SubResource( 7 )
+
+[node name="Block101" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block101" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block101/Area"]
+shape = SubResource( 7 )
+
+[node name="Block102" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block102" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block102/Area"]
+shape = SubResource( 7 )
+
+[node name="Block103" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block103" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block103/Area"]
+shape = SubResource( 7 )
+
+[node name="Block104" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block104" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block104/Area"]
+shape = SubResource( 7 )
+
+[node name="Block105" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block105" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block105/Area"]
+shape = SubResource( 7 )
+
+[node name="Block106" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block106" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block106/Area"]
+shape = SubResource( 7 )
+
+[node name="Block107" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block107" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block107/Area"]
+shape = SubResource( 7 )
+
+[node name="Block108" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block108" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block108/Area"]
+shape = SubResource( 7 )
+
+[node name="Block109" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block109" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block109/Area"]
+shape = SubResource( 7 )
+
+[node name="Block110" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block110" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block110/Area"]
+shape = SubResource( 7 )
+
+[node name="Block111" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block111" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block111/Area"]
+shape = SubResource( 7 )
+
+[node name="Block112" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block112" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block112/Area"]
+shape = SubResource( 7 )
+
+[node name="Block113" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block113" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block113/Area"]
+shape = SubResource( 7 )
+
+[node name="Block114" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block114" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block114/Area"]
+shape = SubResource( 7 )
+
+[node name="Block115" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block115" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block115/Area"]
+shape = SubResource( 7 )
+
+[node name="Block116" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block116" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block116/Area"]
+shape = SubResource( 7 )
+
+[node name="Block117" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block117" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block117/Area"]
+shape = SubResource( 7 )
+
+[node name="Block118" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block118" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block118/Area"]
+shape = SubResource( 7 )
+
+[node name="Block119" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block119" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block119/Area"]
+shape = SubResource( 7 )
+
+[node name="Block120" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block120" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block120/Area"]
+shape = SubResource( 7 )
+
+[node name="Block121" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block121" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block121/Area"]
+shape = SubResource( 7 )
+
+[node name="Block122" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block122" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block122/Area"]
+shape = SubResource( 7 )
+
+[node name="Block123" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block123" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block123/Area"]
+shape = SubResource( 7 )
+
+[node name="Block124" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block124" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block124/Area"]
+shape = SubResource( 7 )
+
+[node name="Block125" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block125" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block125/Area"]
+shape = SubResource( 7 )
+
+[node name="Block126" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block126" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block126/Area"]
+shape = SubResource( 7 )
+
+[node name="Block127" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block127" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block127/Area"]
+shape = SubResource( 7 )
+
+[node name="Block128" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block128" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block128/Area"]
+shape = SubResource( 7 )
+
+[node name="Block129" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block129" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block129/Area"]
+shape = SubResource( 7 )
+
+[node name="Block130" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block130" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block130/Area"]
+shape = SubResource( 7 )
+
+[node name="Block131" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block131" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block131/Area"]
+shape = SubResource( 7 )
+
+[node name="Block132" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block132" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block132/Area"]
+shape = SubResource( 7 )
+
+[node name="Block133" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block133" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block133/Area"]
+shape = SubResource( 7 )
+
+[node name="Block134" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block134" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block134/Area"]
+shape = SubResource( 7 )
+
+[node name="Block135" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block135" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block135/Area"]
+shape = SubResource( 7 )
+
+[node name="Block136" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block136" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block136/Area"]
+shape = SubResource( 7 )
+
+[node name="Block137" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block137" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block137/Area"]
+shape = SubResource( 7 )
+
+[node name="Block138" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block138" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block138/Area"]
+shape = SubResource( 7 )
+
+[node name="Block139" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block139" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block139/Area"]
+shape = SubResource( 7 )
+
+[node name="Block140" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block140" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block140/Area"]
+shape = SubResource( 7 )
+
+[node name="Block141" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block141" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block141/Area"]
+shape = SubResource( 7 )
+
+[node name="Block142" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block142" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block142/Area"]
+shape = SubResource( 7 )
+
+[node name="Block143" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block143" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block143/Area"]
+shape = SubResource( 7 )
+
+[node name="Block144" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block144" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block144/Area"]
+shape = SubResource( 7 )
+
+[node name="Block145" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block145" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block145/Area"]
+shape = SubResource( 7 )
+
+[node name="Block146" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.625, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block146" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block146/Area"]
+shape = SubResource( 7 )
+
+[node name="Block147" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.95833, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block147" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block147/Area"]
+shape = SubResource( 7 )
+
+[node name="Block148" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -2.29167, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block148" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block148/Area"]
+shape = SubResource( 7 )
+
+[node name="Block149" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -1.29167, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block149" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block149/Area"]
+shape = SubResource( 7 )
+
+[node name="Block150" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, -0.958334, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block150" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block150/Area"]
+shape = SubResource( 7 )
+
+[node name="Block151" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block151" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block151/Area"]
+shape = SubResource( 7 )
+
+[node name="Block152" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block152" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block152/Area"]
+shape = SubResource( 7 )
+
+[node name="Block153" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block153" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block153/Area"]
+shape = SubResource( 7 )
+
+[node name="Block154" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block154" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block154/Area"]
+shape = SubResource( 7 )
+
+[node name="Block155" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 0.0416667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block155" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block155/Area"]
+shape = SubResource( 7 )
+
+[node name="Block156" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block156" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block156/Area"]
+shape = SubResource( 7 )
+
+[node name="Block157" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block157" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block157/Area"]
+shape = SubResource( 7 )
+
+[node name="Block158" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block158" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block158/Area"]
+shape = SubResource( 7 )
+
+[node name="Block159" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block159" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block159/Area"]
+shape = SubResource( 7 )
+
+[node name="Block160" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 0.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block160" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block160/Area"]
+shape = SubResource( 7 )
+
+[node name="Block161" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block161" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block161/Area"]
+shape = SubResource( 7 )
+
+[node name="Block162" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block162" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block162/Area"]
+shape = SubResource( 7 )
+
+[node name="Block163" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block163" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block163/Area"]
+shape = SubResource( 7 )
+
+[node name="Block164" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block164" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block164/Area"]
+shape = SubResource( 7 )
+
+[node name="Block165" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 0.708333 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block165" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block165/Area"]
+shape = SubResource( 7 )
+
+[node name="Block166" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block166" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block166/Area"]
+shape = SubResource( 7 )
+
+[node name="Block167" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block167" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block167/Area"]
+shape = SubResource( 7 )
+
+[node name="Block168" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block168" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block168/Area"]
+shape = SubResource( 7 )
+
+[node name="Block169" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block169" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block169/Area"]
+shape = SubResource( 7 )
+
+[node name="Block170" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -0.291667 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block170" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block170/Area"]
+shape = SubResource( 7 )
+
+[node name="Block171" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block171" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block171/Area"]
+shape = SubResource( 7 )
+
+[node name="Block172" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block172" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block172/Area"]
+shape = SubResource( 7 )
+
+[node name="Block173" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block173" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block173/Area"]
+shape = SubResource( 7 )
+
+[node name="Block174" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block174" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block174/Area"]
+shape = SubResource( 7 )
+
+[node name="Block175" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -0.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block175" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block175/Area"]
+shape = SubResource( 7 )
+
+[node name="Block176" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block176" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block176/Area"]
+shape = SubResource( 7 )
+
+[node name="Block177" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block177" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block177/Area"]
+shape = SubResource( 7 )
+
+[node name="Block178" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block178" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block178/Area"]
+shape = SubResource( 7 )
+
+[node name="Block179" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block179" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block179/Area"]
+shape = SubResource( 7 )
+
+[node name="Block180" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 1.70833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block180" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block180/Area"]
+shape = SubResource( 7 )
+
+[node name="Block181" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block181" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block181/Area"]
+shape = SubResource( 7 )
+
+[node name="Block182" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block182" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block182/Area"]
+shape = SubResource( 7 )
+
+[node name="Block183" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block183" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block183/Area"]
+shape = SubResource( 7 )
+
+[node name="Block184" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block184" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block184/Area"]
+shape = SubResource( 7 )
+
+[node name="Block185" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 2.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block185" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block185/Area"]
+shape = SubResource( 7 )
+
+[node name="Block186" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block186" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block186/Area"]
+shape = SubResource( 7 )
+
+[node name="Block187" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block187" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block187/Area"]
+shape = SubResource( 7 )
+
+[node name="Block188" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block188" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block188/Area"]
+shape = SubResource( 7 )
+
+[node name="Block189" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block189" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block189/Area"]
+shape = SubResource( 7 )
+
+[node name="Block190" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 2.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block190" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block190/Area"]
+shape = SubResource( 7 )
+
+[node name="Block191" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block191" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block191/Area"]
+shape = SubResource( 7 )
+
+[node name="Block192" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block192" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block192/Area"]
+shape = SubResource( 7 )
+
+[node name="Block193" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block193" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block193/Area"]
+shape = SubResource( 7 )
+
+[node name="Block194" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block194" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block194/Area"]
+shape = SubResource( 7 )
+
+[node name="Block195" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 1.375 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block195" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block195/Area"]
+shape = SubResource( 7 )
+
+[node name="Block196" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block196" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block196/Area"]
+shape = SubResource( 7 )
+
+[node name="Block197" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block197" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block197/Area"]
+shape = SubResource( 7 )
+
+[node name="Block198" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block198" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block198/Area"]
+shape = SubResource( 7 )
+
+[node name="Block199" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block199" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block199/Area"]
+shape = SubResource( 7 )
+
+[node name="Block200" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, 1.04167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block200" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block200/Area"]
+shape = SubResource( 7 )
+
+[node name="Block201" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block201" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block201/Area"]
+shape = SubResource( 7 )
+
+[node name="Block202" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block202" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block202/Area"]
+shape = SubResource( 7 )
+
+[node name="Block203" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block203" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block203/Area"]
+shape = SubResource( 7 )
+
+[node name="Block204" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block204" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block204/Area"]
+shape = SubResource( 7 )
+
+[node name="Block205" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -1.625 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block205" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block205/Area"]
+shape = SubResource( 7 )
+
+[node name="Block206" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block206" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block206/Area"]
+shape = SubResource( 7 )
+
+[node name="Block207" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block207" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block207/Area"]
+shape = SubResource( 7 )
+
+[node name="Block208" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block208" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block208/Area"]
+shape = SubResource( 7 )
+
+[node name="Block209" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block209" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block209/Area"]
+shape = SubResource( 7 )
+
+[node name="Block210" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -1.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block210" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block210/Area"]
+shape = SubResource( 7 )
+
+[node name="Block211" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block211" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block211/Area"]
+shape = SubResource( 7 )
+
+[node name="Block212" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block212" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block212/Area"]
+shape = SubResource( 7 )
+
+[node name="Block213" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block213" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block213/Area"]
+shape = SubResource( 7 )
+
+[node name="Block214" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block214" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block214/Area"]
+shape = SubResource( 7 )
+
+[node name="Block215" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -0.958334 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block215" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block215/Area"]
+shape = SubResource( 7 )
+
+[node name="Block216" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block216" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block216/Area"]
+shape = SubResource( 7 )
+
+[node name="Block217" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block217" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block217/Area"]
+shape = SubResource( 7 )
+
+[node name="Block218" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block218" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block218/Area"]
+shape = SubResource( 7 )
+
+[node name="Block219" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block219" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block219/Area"]
+shape = SubResource( 7 )
+
+[node name="Block220" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -1.95833 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block220" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block220/Area"]
+shape = SubResource( 7 )
+
+[node name="Block221" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.70833, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block221" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block221/Area"]
+shape = SubResource( 7 )
+
+[node name="Block222" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.375, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block222" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block222/Area"]
+shape = SubResource( 7 )
+
+[node name="Block223" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 1.04167, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block223" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block223/Area"]
+shape = SubResource( 7 )
+
+[node name="Block224" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.04167, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block224" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block224/Area"]
+shape = SubResource( 7 )
+
+[node name="Block225" type="MeshInstance" parent="Menu/Slots" groups=[
+"Blocks",
+]]
+transform = Transform( 0.168, 0, 0, 0, 0.2, 0, 0, 0, 0.17424, 2.375, -2, -2.29167 )
+mesh = SubResource( 6 )
+material/0 = null
+script = ExtResource( 8 )
+textureWater = ExtResource( 11 )
+textureGrass = ExtResource( 10 )
+textureDirt = ExtResource( 12 )
+
+[node name="Area" type="Area" parent="Menu/Slots/Block225" groups=[
+"Blocks",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Menu/Slots/Block225/Area"]
+shape = SubResource( 7 )
+
+[connection signal="input_event" from="Menu/Slots/Block/Area" to="Menu/Slots/Block" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block4/Area" to="Menu/Slots/Block4" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block5/Area" to="Menu/Slots/Block5" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block2/Area" to="Menu/Slots/Block2" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block3/Area" to="Menu/Slots/Block3" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block6/Area" to="Menu/Slots/Block6" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block7/Area" to="Menu/Slots/Block7" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block8/Area" to="Menu/Slots/Block8" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block9/Area" to="Menu/Slots/Block9" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block10/Area" to="Menu/Slots/Block10" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block11/Area" to="Menu/Slots/Block11" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block12/Area" to="Menu/Slots/Block12" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block13/Area" to="Menu/Slots/Block13" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block14/Area" to="Menu/Slots/Block14" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block15/Area" to="Menu/Slots/Block15" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block16/Area" to="Menu/Slots/Block16" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block17/Area" to="Menu/Slots/Block17" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block18/Area" to="Menu/Slots/Block18" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block19/Area" to="Menu/Slots/Block19" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block20/Area" to="Menu/Slots/Block20" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block21/Area" to="Menu/Slots/Block21" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block22/Area" to="Menu/Slots/Block22" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block23/Area" to="Menu/Slots/Block23" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block24/Area" to="Menu/Slots/Block24" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block25/Area" to="Menu/Slots/Block25" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block26/Area" to="Menu/Slots/Block26" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block27/Area" to="Menu/Slots/Block27" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block28/Area" to="Menu/Slots/Block28" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block29/Area" to="Menu/Slots/Block29" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block30/Area" to="Menu/Slots/Block30" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block31/Area" to="Menu/Slots/Block31" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block32/Area" to="Menu/Slots/Block32" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block33/Area" to="Menu/Slots/Block33" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block34/Area" to="Menu/Slots/Block34" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block35/Area" to="Menu/Slots/Block35" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block36/Area" to="Menu/Slots/Block36" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block37/Area" to="Menu/Slots/Block37" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block38/Area" to="Menu/Slots/Block38" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block39/Area" to="Menu/Slots/Block39" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block40/Area" to="Menu/Slots/Block40" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block41/Area" to="Menu/Slots/Block41" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block42/Area" to="Menu/Slots/Block42" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block43/Area" to="Menu/Slots/Block43" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block44/Area" to="Menu/Slots/Block44" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block45/Area" to="Menu/Slots/Block45" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block46/Area" to="Menu/Slots/Block46" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block47/Area" to="Menu/Slots/Block47" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block48/Area" to="Menu/Slots/Block48" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block49/Area" to="Menu/Slots/Block49" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block50/Area" to="Menu/Slots/Block50" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block51/Area" to="Menu/Slots/Block51" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block52/Area" to="Menu/Slots/Block52" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block53/Area" to="Menu/Slots/Block53" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block54/Area" to="Menu/Slots/Block54" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block55/Area" to="Menu/Slots/Block55" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block56/Area" to="Menu/Slots/Block56" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block57/Area" to="Menu/Slots/Block57" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block58/Area" to="Menu/Slots/Block58" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block59/Area" to="Menu/Slots/Block59" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block60/Area" to="Menu/Slots/Block60" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block61/Area" to="Menu/Slots/Block61" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block62/Area" to="Menu/Slots/Block62" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block63/Area" to="Menu/Slots/Block63" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block64/Area" to="Menu/Slots/Block64" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block65/Area" to="Menu/Slots/Block65" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block66/Area" to="Menu/Slots/Block66" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block67/Area" to="Menu/Slots/Block67" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block68/Area" to="Menu/Slots/Block68" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block69/Area" to="Menu/Slots/Block69" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block70/Area" to="Menu/Slots/Block70" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block71/Area" to="Menu/Slots/Block71" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block72/Area" to="Menu/Slots/Block72" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block73/Area" to="Menu/Slots/Block73" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block74/Area" to="Menu/Slots/Block74" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block75/Area" to="Menu/Slots/Block75" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block76/Area" to="Menu/Slots/Block76" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block77/Area" to="Menu/Slots/Block77" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block78/Area" to="Menu/Slots/Block78" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block79/Area" to="Menu/Slots/Block79" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block80/Area" to="Menu/Slots/Block80" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block81/Area" to="Menu/Slots/Block81" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block82/Area" to="Menu/Slots/Block82" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block83/Area" to="Menu/Slots/Block83" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block84/Area" to="Menu/Slots/Block84" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block85/Area" to="Menu/Slots/Block85" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block86/Area" to="Menu/Slots/Block86" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block87/Area" to="Menu/Slots/Block87" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block88/Area" to="Menu/Slots/Block88" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block89/Area" to="Menu/Slots/Block89" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block90/Area" to="Menu/Slots/Block90" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block91/Area" to="Menu/Slots/Block91" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block92/Area" to="Menu/Slots/Block92" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block93/Area" to="Menu/Slots/Block93" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block94/Area" to="Menu/Slots/Block94" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block95/Area" to="Menu/Slots/Block95" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block96/Area" to="Menu/Slots/Block96" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block97/Area" to="Menu/Slots/Block97" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block98/Area" to="Menu/Slots/Block98" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block99/Area" to="Menu/Slots/Block99" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block100/Area" to="Menu/Slots/Block100" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block101/Area" to="Menu/Slots/Block101" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block102/Area" to="Menu/Slots/Block102" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block103/Area" to="Menu/Slots/Block103" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block104/Area" to="Menu/Slots/Block104" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block105/Area" to="Menu/Slots/Block105" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block106/Area" to="Menu/Slots/Block106" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block107/Area" to="Menu/Slots/Block107" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block108/Area" to="Menu/Slots/Block108" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block109/Area" to="Menu/Slots/Block109" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block110/Area" to="Menu/Slots/Block110" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block111/Area" to="Menu/Slots/Block111" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block112/Area" to="Menu/Slots/Block112" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block113/Area" to="Menu/Slots/Block113" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block114/Area" to="Menu/Slots/Block114" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block115/Area" to="Menu/Slots/Block115" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block116/Area" to="Menu/Slots/Block116" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block117/Area" to="Menu/Slots/Block117" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block118/Area" to="Menu/Slots/Block118" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block119/Area" to="Menu/Slots/Block119" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block120/Area" to="Menu/Slots/Block120" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block121/Area" to="Menu/Slots/Block121" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block122/Area" to="Menu/Slots/Block122" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block123/Area" to="Menu/Slots/Block123" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block124/Area" to="Menu/Slots/Block124" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block125/Area" to="Menu/Slots/Block125" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block126/Area" to="Menu/Slots/Block126" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block127/Area" to="Menu/Slots/Block127" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block128/Area" to="Menu/Slots/Block128" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block129/Area" to="Menu/Slots/Block129" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block130/Area" to="Menu/Slots/Block130" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block131/Area" to="Menu/Slots/Block131" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block132/Area" to="Menu/Slots/Block132" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block133/Area" to="Menu/Slots/Block133" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block134/Area" to="Menu/Slots/Block134" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block135/Area" to="Menu/Slots/Block135" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block136/Area" to="Menu/Slots/Block136" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block137/Area" to="Menu/Slots/Block137" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block138/Area" to="Menu/Slots/Block138" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block139/Area" to="Menu/Slots/Block139" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block140/Area" to="Menu/Slots/Block140" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block141/Area" to="Menu/Slots/Block141" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block142/Area" to="Menu/Slots/Block142" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block143/Area" to="Menu/Slots/Block143" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block144/Area" to="Menu/Slots/Block144" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block145/Area" to="Menu/Slots/Block145" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block146/Area" to="Menu/Slots/Block146" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block147/Area" to="Menu/Slots/Block147" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block148/Area" to="Menu/Slots/Block148" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block149/Area" to="Menu/Slots/Block149" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block150/Area" to="Menu/Slots/Block150" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block151/Area" to="Menu/Slots/Block151" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block152/Area" to="Menu/Slots/Block152" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block153/Area" to="Menu/Slots/Block153" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block154/Area" to="Menu/Slots/Block154" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block155/Area" to="Menu/Slots/Block155" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block156/Area" to="Menu/Slots/Block156" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block157/Area" to="Menu/Slots/Block157" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block158/Area" to="Menu/Slots/Block158" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block159/Area" to="Menu/Slots/Block159" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block160/Area" to="Menu/Slots/Block160" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block161/Area" to="Menu/Slots/Block161" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block162/Area" to="Menu/Slots/Block162" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block163/Area" to="Menu/Slots/Block163" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block164/Area" to="Menu/Slots/Block164" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block165/Area" to="Menu/Slots/Block165" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block166/Area" to="Menu/Slots/Block166" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block167/Area" to="Menu/Slots/Block167" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block168/Area" to="Menu/Slots/Block168" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block169/Area" to="Menu/Slots/Block169" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block170/Area" to="Menu/Slots/Block170" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block171/Area" to="Menu/Slots/Block171" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block172/Area" to="Menu/Slots/Block172" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block173/Area" to="Menu/Slots/Block173" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block174/Area" to="Menu/Slots/Block174" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block175/Area" to="Menu/Slots/Block175" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block176/Area" to="Menu/Slots/Block176" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block177/Area" to="Menu/Slots/Block177" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block178/Area" to="Menu/Slots/Block178" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block179/Area" to="Menu/Slots/Block179" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block180/Area" to="Menu/Slots/Block180" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block181/Area" to="Menu/Slots/Block181" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block182/Area" to="Menu/Slots/Block182" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block183/Area" to="Menu/Slots/Block183" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block184/Area" to="Menu/Slots/Block184" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block185/Area" to="Menu/Slots/Block185" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block186/Area" to="Menu/Slots/Block186" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block187/Area" to="Menu/Slots/Block187" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block188/Area" to="Menu/Slots/Block188" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block189/Area" to="Menu/Slots/Block189" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block190/Area" to="Menu/Slots/Block190" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block191/Area" to="Menu/Slots/Block191" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block192/Area" to="Menu/Slots/Block192" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block193/Area" to="Menu/Slots/Block193" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block194/Area" to="Menu/Slots/Block194" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block195/Area" to="Menu/Slots/Block195" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block196/Area" to="Menu/Slots/Block196" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block197/Area" to="Menu/Slots/Block197" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block198/Area" to="Menu/Slots/Block198" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block199/Area" to="Menu/Slots/Block199" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block200/Area" to="Menu/Slots/Block200" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block201/Area" to="Menu/Slots/Block201" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block202/Area" to="Menu/Slots/Block202" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block203/Area" to="Menu/Slots/Block203" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block204/Area" to="Menu/Slots/Block204" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block205/Area" to="Menu/Slots/Block205" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block206/Area" to="Menu/Slots/Block206" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block207/Area" to="Menu/Slots/Block207" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block208/Area" to="Menu/Slots/Block208" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block209/Area" to="Menu/Slots/Block209" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block210/Area" to="Menu/Slots/Block210" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block211/Area" to="Menu/Slots/Block211" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block212/Area" to="Menu/Slots/Block212" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block213/Area" to="Menu/Slots/Block213" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block214/Area" to="Menu/Slots/Block214" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block215/Area" to="Menu/Slots/Block215" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block216/Area" to="Menu/Slots/Block216" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block217/Area" to="Menu/Slots/Block217" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block218/Area" to="Menu/Slots/Block218" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block219/Area" to="Menu/Slots/Block219" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block220/Area" to="Menu/Slots/Block220" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block221/Area" to="Menu/Slots/Block221" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block222/Area" to="Menu/Slots/Block222" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block223/Area" to="Menu/Slots/Block223" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block224/Area" to="Menu/Slots/Block224" method="_on_Area_input_event"]
+[connection signal="input_event" from="Menu/Slots/Block225/Area" to="Menu/Slots/Block225" method="_on_Area_input_event"]

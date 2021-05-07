@@ -1,30 +1,31 @@
 extends MeshInstance
 
 var material = SpatialMaterial.new()
-var MaterialBrush 
 
-func _process(delta):
-	MaterialBrush = Menu.MaterialBrush
+export(Material) var textureWater
+export(Material) var textureGrass
+export(Material) var textureDirt
+
+
 func _on_Area_input_event(camera, event, click_position, click_normal, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed == true:
-			print("BrushID", Menu.MaterialBrush)
-			if Menu.MaterialBrush == 1:#Red
+			print("BrushID", BaseDate.BrushID)
+			if BaseDate.BrushID == 1:#Red
 				material.albedo_color = Color(1, 0, 0)
+				 
 				set_surface_material(0, material)
-				print("BrushID", Menu.MaterialBrush)
-			if Menu.MaterialBrush == 2:#Green
-				material.albedo_color = Color(0, 1, 0, 1)
-				set_surface_material(0, material)	
-				print("BrushID", Menu.MaterialBrush)
-			if Menu.MaterialBrush == 3:#Blue
-				material.albedo_color = Color(0, 0, 1, 1)
-				set_surface_material(0, material)	
-				print("BrushID", Menu.MaterialBrush)
-			if Menu.MaterialBrush == 4:#Brown
-				material.albedo_color = Color( 0.65, 0.16, 0.16, 1)
-				set_surface_material(0, material)	
-				print("BrushID", Menu.MaterialBrush)
+				print("BrushID", BaseDate.BrushID)
+			if BaseDate.BrushID == 2:#Green
+				#material.albedo_color = Color(0, 1, 0, 1)
+				set_surface_material(0, textureGrass)	
+				print("BrushID", BaseDate.BrushID)
+			if BaseDate.BrushID == 3:#Blue
+				set_surface_material(0, textureWater)	
+				print("BrushID", BaseDate.BrushID)
+			if BaseDate.BrushID == 4:#Brown
+				set_surface_material(0, textureDirt)	
+				print("BrushID", BaseDate.BrushID)
 	
 func _ready():
 	pass

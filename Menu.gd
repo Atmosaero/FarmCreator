@@ -1,28 +1,24 @@
 extends Panel
 
-var MaterialBrush
-
-var x = 15
+onready var ButtonA = get_node("Button1")
+onready var ButtonB = get_node("Button2")
+onready var ButtonC = get_node("Button3")
+onready var ButtonD = get_node("Button4")
 
 func _ready():
-	MaterialBrush = 1
-	print(MaterialBrush)
-	return MaterialBrush
+	pass
 	
-func _on_A_pressed():
-	MaterialBrush = 1
-	print(MaterialBrush)
-	return MaterialBrush
-	
-func _on_B_pressed():
-	MaterialBrush = 2
-	print(MaterialBrush)
-	return MaterialBrush
-	
-func _on_C_pressed():
-	MaterialBrush = 3
-	print(MaterialBrush)
+func _process(delta):
+	if ButtonA.pressed:
+		BaseDate.BrushID = 1
+		print(BaseDate.BrushID)
+	if ButtonB.pressed:
+		BaseDate.BrushID = 2
+		print(BaseDate.BrushID)
+	if ButtonC.pressed:
+		BaseDate.BrushID = 3
+		print(BaseDate.BrushID)
+	if ButtonD.pressed:
+		BaseDate.BrushID = 4
+		print(BaseDate.BrushID)
 
-func _on_D_pressed():
-	MaterialBrush = 4
-	print(MaterialBrush)

@@ -4,6 +4,7 @@ var ButtonLight
 var ButtonCam
 
 const Speed = 0.01
+const Speed2 = 0.001
 var LightStatus = true
 var LightObject
 
@@ -13,7 +14,7 @@ var CameraStatus = false
 
 func _ready():
 	Camera1 = get_node("Camera")
-	Camera2 = get_node("CameraHigh")
+	Camera2 = get_node("/root/Main/Terrain/CameraHigh")
 	
 	ButtonLight = get_node("ButtonLight")
 	ButtonCam = get_node("ButtonCamera")
