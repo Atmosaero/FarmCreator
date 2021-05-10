@@ -20,7 +20,6 @@ BaseDate="*res://BaseDate.gd"
 
 [display]
 
-window/size/fullscreen=true
 window/stretch/mode="viewport"
 
 [input]
